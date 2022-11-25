@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
 contract MarketSentiment{
@@ -35,15 +36,15 @@ contract MarketSentiment{
     }
 
     //function to vote
-    function vote(bool _voteUp, bool _voteDown, string memory _tickerName) public{
+    function vote(bool _vote, string memory _tickerName) public{
         require(tickers[_tickerName].voter[msg.sender] == false, "Este usuario ya voto!!");//if the user doesnt vote never, vote.
         //if logic
-        if(_voteUp == true){
-            tickers[_tickerName].votesUp += 1;
-           emit tickerUpdate(_tickerName, 1, 0);
-        }else if(_voteDown == true){
-            tickers[_tickerName].votesDown += 1;
-            emit tickerUpdate(_tickerName, 0, 1);
+        if(_vote == true){
+            tickers[_tickerName].votesUp +=1;
+               emit tickerUpdate(_tickerName, 1, 0);
+        }else if(_vote == false){
+           emit tickerUpdate(_tickerName, 0, 1);
+            tickers[_tickerName].votesDown +=1;
         }else{
             revert("Wrong choose");
         }
